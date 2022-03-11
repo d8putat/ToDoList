@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ToDoList.Pages.NewTaskPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pageModels="clr-namespace:ToDoList.PageModels"
+             xmlns:res="clr-namespace:ToDoList.LocalizationResources"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <AbsoluteLayout>
+                <Button Command="{Binding BackWithoutLabelCommand}" Text="{x:Static res:Resources.Back}" />
+            </AbsoluteLayout>
+            <Label Margin="0,30,0,0"
+                   Style="{StaticResource NewTaskLabel}"
+                   Text="{x:Static res:Resources.TitleCreationTask}" />
+            <Editor x:Name="TextEditor"
+                    Placeholder="{x:Static res:Resources.TaskDefenition}"
+                    Style="{StaticResource EditorStyle}"
+                    Text="{Binding Text}" />
+            <Button Command="{Binding CreateTaskCommand}" Text="{x:Static res:Resources.Create}" />
+            <Button Command="{Binding DisplayTasksCommand}" Text="{x:Static res:Resources.CreationTask}" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

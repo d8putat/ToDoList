@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ToDoList.Pages.TasksPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="clr-namespace:ToDoList.MarkupExtensions;assembly=ToDoList"
+             xmlns:inputKit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:local="clr-namespace:ToDoList;assembly=ToDoList"
+             xmlns:models="clr-namespace:ToDoList.Models"
+             xmlns:pageModels="clr-namespace:ToDoList.PageModels"
+             xmlns:res="clr-namespace:ToDoList.LocalizationResources"
+             xmlns:selectors="clr-namespace:ToDoList.Helpers;assembly=ToDoList"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <selectors:IndexToColorConverter x:Key="IndexToColorConverterBackground"
+                                       EvenColor="#0D92DB"
+                                       OddColor="Black"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="20" BackgroundColor="{StaticResource BackgroundColor}">
+            <StackLayout>
+                <Label Style="{StaticResource TimeLabelStyle}" Text="{Binding Date, StringFormat='{0:MMMM} {0:dd}, {0:yyyy}'}" />
+                <BoxView HeightRequest="2"
+                         HorizontalOptions="Fill"
+                         Color="{StaticResource Gray}" />
+            </StackLayout>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ScrollView>
+                    <StackLayout BackgroundColor="{StaticResource BackgroundColor}">
+                        <Label FontSize="20"
+                               HorizontalOptions="CenterAndExpand"
+                               IsVisible="{Binding IsFirstNotificationVisible}"
+                               Text="{x:Static res:Resources.NoTasks}"
+                               TextColor="{StaticResource White}"
+                               VerticalOptions="CenterAndExpand" />
+                        <Label Margin="0,14,0,0"
+                               IsVisible="{Binding IsPendingVisible}"
+                               Style="{StaticResource CompletedLabelStyle}"
+                               Text="{x:Static res:Resources.TitleIncompleteTasks}" />
+                        <StackLayout x:Name="IncompletedTasks" BindableLayout.ItemsSource="{Binding IncompletedTasks}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference IncompletedTasks}}">
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem BackgroundColor="Transparent"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
+                                                       CommandParameter="{Binding .}"
+                                                       IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+                                        <StackLayout BackgroundColor="Transparent" Orientation="Horizontal">
+                                            <inputKit:CheckBox x:Name="Completed"
+                                                           CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
+                                                           CommandParameter="{Binding .}"
+                                                           IsChecked="{Binding IsCompleted}"
+                                                           Style="{StaticResource CheckBoxStyle}"
+                                                           Type="Check" />
+                                            <Label Style="{StaticResource CellCompletedLabelStyle}" Text="{Binding Description}">
+                                                <Label.Triggers>
+                                                    <DataTrigger Binding="{Binding Source={x:Reference Completed}, Path=IsChecked}"
+                                                             TargetType="Label"
+                                                             Value="false">
+                                                        <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </StackLayout>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <Label Margin="0,22,0,0"
+                               IsVisible="{Binding IsCompletedVisible}"
+                               Style="{StaticResource CompletedLabelStyle}"
+                               Text="{x:Static res:Resources.TitleCompleteTasks}" />
+
+                        <StackLayout x:Name="CompletedTasks" BindableLayout.ItemsSource="{Binding CompletedTasks}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference CompletedTasks}}">
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems>
+                                                <SwipeItem BackgroundColor="Transparent"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
+                                                       CommandParameter="{Binding .}"
+                                                       IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+                                        <StackLayout BackgroundColor="Transparent" Orientation="Horizontal">
+                                            <inputKit:CheckBox x:Name="Completed"
+                                                           CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
+                                                           CommandParameter="{Binding .}"
+                                                           IsChecked="{Binding IsCompleted}"
+                                                           Style="{StaticResource CheckBoxStyle}"
+                                                           Type="Check" />
+                                            <Label Style="{StaticResource CellCompletedLabelStyle}" Text="{Binding Description}">
+                                                <Label.Triggers>
+                                                    <DataTrigger Binding="{Binding Source={x:Reference Completed}, Path=IsChecked}"
+                                                             TargetType="Label"
+                                                             Value="false">
+                                                        <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </StackLayout>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+                <ImageButton BackgroundColor="Transparent"
+                             Command="{Binding AddTaskCommand}"
+                             HeightRequest="100"
+                             HorizontalOptions="EndAndExpand"
+                             Source="{extensions:ImageResource ToDoList.Images.add_task.png}"
+                             VerticalOptions="EndAndExpand"
+                             WidthRequest="100" />
+            </Grid>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

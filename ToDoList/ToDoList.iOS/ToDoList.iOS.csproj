@@ -148,4 +148,7 @@
       <Name>ToDoList</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\splash_screen_ios.png" />
+  </ItemGroup>
 </Project>

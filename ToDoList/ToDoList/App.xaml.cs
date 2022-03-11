@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using ToDoList.PageModels;
 using ToDoList.Pages;
 using Xamarin.Forms;
@@ -16,12 +17,13 @@ namespace ToDoList
         {
             InitializeComponent();
             InitServices();
+            Thread.Sleep(3000);
             MainPage = InitStartPage();
         }
 
         private void InitServices()
         {
-            FreshIOC.Container.Register<ITaskService, TaskService>();
+            FreshIOC.Container.Register<ITaskService, TaskService>().AsSingleton();
         }
 
         private Page InitStartPage()

@@ -62,13 +62,8 @@ namespace ToDoList.Services
 
         public void EditStateTask(ToDoTask editTask)
         {
-            foreach (var item in Tasks)
-            {
-                if (item.Id == editTask.Id)
-                {
-                    item.IsCompleted = !item.IsCompleted;
-                }
-            }
+            DeleteTaskFromDatabase(editTask);
+            SaveTaskInDatabase(editTask);
         }
     }
 }

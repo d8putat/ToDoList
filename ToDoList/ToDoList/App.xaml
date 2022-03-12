@@ -14,6 +14,8 @@
         <Color x:Key="EvenSelectorColor">#FFC0CB</Color>
         <Color x:Key="OddSelectorColor">#A2D5C6</Color>
         <Color x:Key="BackgroundDeleteButtonColor">#FFCC99</Color>
+        <Color x:Key="BackgroundCompletedTasksColor">#FFED87</Color>
+
 
 
         <!--  LABELS  -->

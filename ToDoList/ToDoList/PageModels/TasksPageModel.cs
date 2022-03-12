@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
 using ToDoList.Interfaces;
 using ToDoList.Models;
@@ -88,7 +89,11 @@ namespace ToDoList.PageModels
 
             if (task.IsCompleted)
             {
+                var indexOfTask = IncompletedTasks.IndexOf(task);
+                var last = IncompletedTasks.Count - 1 == indexOfTask ? true : false;
                 IncompletedTasks.Remove(task);
+                if (last == false)
+                    RefreshData(indexOfTask);
                 CompletedTasks.Add(task);
             }
             else
@@ -114,7 +119,11 @@ namespace ToDoList.PageModels
         {
             if (IncompletedTasks.Contains(task))
             {
+                var indexOfTask = IncompletedTasks.IndexOf(task);
+                var last = IncompletedTasks.Count - 1 == indexOfTask ? true : false;
                 IncompletedTasks.Remove(task);
+                if (last == false) 
+                    RefreshData(indexOfTask);
             }
             else
             {
@@ -151,6 +160,27 @@ namespace ToDoList.PageModels
             }
         }
 
+        private void RefreshData(int index)
+        {
+            var countElements = IncompletedTasks.Count - index;
+            var temporaryTasks = new ToDoTask[countElements];
+            var temporaryIndex = index;
+            for (int i = 0; i < countElements; i++)
+            {
+                temporaryTasks[i] = IncompletedTasks[temporaryIndex];
+                temporaryIndex++;
+            }
+            for (var i = IncompletedTasks.Count-1; i >= index; i--)
+            {
+                IncompletedTasks.Remove(IncompletedTasks[i]);
+            }
+
+            foreach (var item in temporaryTasks)
+            {
+                IncompletedTasks.Add(item);
+                index++;
+            }
+        }
         #endregion Private methods
     }
 }

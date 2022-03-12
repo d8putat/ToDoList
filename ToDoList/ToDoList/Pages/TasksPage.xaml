@@ -77,16 +77,16 @@
                         <StackLayout x:Name="CompletedTasks" BindableLayout.ItemsSource="{Binding CompletedTasks}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <SwipeView BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference CompletedTasks}}">
+                                    <SwipeView>
                                         <SwipeView.LeftItems>
                                             <SwipeItems>
-                                                <SwipeItem BackgroundColor="Transparent"
+                                                <SwipeItem BackgroundColor="{StaticResource BackgroundDeleteButtonColor}"
                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
                                                            CommandParameter="{Binding .}"
                                                            IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
                                             </SwipeItems>
                                         </SwipeView.LeftItems>
-                                        <StackLayout BackgroundColor="Transparent" Orientation="Horizontal">
+                                        <StackLayout BackgroundColor="{StaticResource BackgroundCompletedTasksColor}" Orientation="Horizontal">
                                             <inputKit:CheckBox x:Name="Completed"
                                                                CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
                                                                CommandParameter="{Binding .}"

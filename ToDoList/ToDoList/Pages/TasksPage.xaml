@@ -12,8 +12,8 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <selectors:IndexToColorConverter x:Key="IndexToColorConverterBackground"
-                                       EvenColor="#0D92DB"
-                                       OddColor="Black"/>
+                                         EvenColor="{StaticResource EvenSelectorColor}"
+                                         OddColor="{StaticResource OddSelectorColor}" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="20" BackgroundColor="{StaticResource BackgroundColor}">
@@ -39,27 +39,27 @@
                         <StackLayout x:Name="IncompletedTasks" BindableLayout.ItemsSource="{Binding IncompletedTasks}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <SwipeView BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference IncompletedTasks}}">
+                                    <SwipeView>
                                         <SwipeView.LeftItems>
                                             <SwipeItems>
-                                                <SwipeItem BackgroundColor="Transparent"
-                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
-                                                       CommandParameter="{Binding .}"
-                                                       IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
+                                                <SwipeItem BackgroundColor="{StaticResource BackgroundDeleteButtonColor}"
+                                                           Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
+                                                           CommandParameter="{Binding .}"
+                                                           IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
                                             </SwipeItems>
                                         </SwipeView.LeftItems>
-                                        <StackLayout BackgroundColor="Transparent" Orientation="Horizontal">
+                                        <StackLayout BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference IncompletedTasks}}" Orientation="Horizontal">
                                             <inputKit:CheckBox x:Name="Completed"
-                                                           CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
-                                                           CommandParameter="{Binding .}"
-                                                           IsChecked="{Binding IsCompleted}"
-                                                           Style="{StaticResource CheckBoxStyle}"
-                                                           Type="Check" />
+                                                               CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
+                                                               CommandParameter="{Binding .}"
+                                                               IsChecked="{Binding IsCompleted}"
+                                                               Style="{StaticResource CheckBoxStyle}"
+                                                               Type="Check" />
                                             <Label Style="{StaticResource CellCompletedLabelStyle}" Text="{Binding Description}">
                                                 <Label.Triggers>
                                                     <DataTrigger Binding="{Binding Source={x:Reference Completed}, Path=IsChecked}"
-                                                             TargetType="Label"
-                                                             Value="false">
+                                                                 TargetType="Label"
+                                                                 Value="false">
                                                         <Setter Property="TextColor" Value="{StaticResource White}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>
@@ -81,23 +81,23 @@
                                         <SwipeView.LeftItems>
                                             <SwipeItems>
                                                 <SwipeItem BackgroundColor="Transparent"
-                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
-                                                       CommandParameter="{Binding .}"
-                                                       IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
+                                                           Command="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=DeleteTaskCommand}"
+                                                           CommandParameter="{Binding .}"
+                                                           IconImageSource="{extensions:ImageResource ToDoList.Images.remove_task.png}" />
                                             </SwipeItems>
                                         </SwipeView.LeftItems>
                                         <StackLayout BackgroundColor="Transparent" Orientation="Horizontal">
                                             <inputKit:CheckBox x:Name="Completed"
-                                                           CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
-                                                           CommandParameter="{Binding .}"
-                                                           IsChecked="{Binding IsCompleted}"
-                                                           Style="{StaticResource CheckBoxStyle}"
-                                                           Type="Check" />
+                                                               CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
+                                                               CommandParameter="{Binding .}"
+                                                               IsChecked="{Binding IsCompleted}"
+                                                               Style="{StaticResource CheckBoxStyle}"
+                                                               Type="Check" />
                                             <Label Style="{StaticResource CellCompletedLabelStyle}" Text="{Binding Description}">
                                                 <Label.Triggers>
                                                     <DataTrigger Binding="{Binding Source={x:Reference Completed}, Path=IsChecked}"
-                                                             TargetType="Label"
-                                                             Value="false">
+                                                                 TargetType="Label"
+                                                                 Value="false">
                                                         <Setter Property="TextColor" Value="{StaticResource White}" />
                                                     </DataTrigger>
                                                 </Label.Triggers>

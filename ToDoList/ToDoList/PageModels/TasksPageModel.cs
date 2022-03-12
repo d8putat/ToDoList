@@ -96,7 +96,6 @@ namespace ToDoList.PageModels
                 CompletedTasks.Remove(task);
                 IncompletedTasks.Add(task);
             }
-            RaisePropertyChanged(nameof(IncompletedTasks));
             _taskService.EditStateTask(task);
         }
 

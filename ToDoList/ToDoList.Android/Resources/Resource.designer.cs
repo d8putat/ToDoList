@@ -19275,7 +19275,7 @@ namespace ToDoList.Droid
 			public const int splash_screen = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int splash_screen_android = 2131165326;
+			public const int splash_screen_and = 2131165326;
 			
 			// aapt resource value: 0x7F07008F
 			public const int test_custom_background = 2131165327;

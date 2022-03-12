@@ -6,19 +6,38 @@ using ToDoList.Interfaces;
 using ToDoList.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace ToDoList.Services
 {
     public class TaskService : ITaskService
     {
         private readonly string _jsonTasksFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "tasks.json");
-        private List<ToDoTask> _temporaryTasksList = new List<ToDoTask>();
-        private string _stringTasks;
+        private string StringTasks { get; set; }
+        private ObservableCollection<ToDoTask> Tasks { get; set; } = new ObservableCollection<ToDoTask>();
         public ObservableCollection<ToDoTask> GetAllTasks()
         {
-            _stringTasks = ReadData();
-            ObservableCollection<ToDoTask> tasks = JsonConvert.DeserializeObject<ObservableCollection<ToDoTask>>(_stringTasks);
-            return tasks;
+            return Tasks;
+        }
+
+        public TaskService()
+        {
+            StringTasks = ReadData();
+            if (StringTasks != "")
+                Tasks = JsonConvert.DeserializeObject<ObservableCollection<ToDoTask>>(StringTasks);
+            Tasks.CollectionChanged += ReWriteData;
+        }
+
+        private void ReWriteData(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var tasks = JsonConvert.SerializeObject(Tasks);
+            using (var stream = new FileStream(_jsonTasksFileName, FileMode.Truncate))
+            {
+                using (var streamWriter = new StreamWriter(stream))
+                {
+                    streamWriter.WriteLine(tasks);
+                }
+            }
         }
 
         private string ReadData()
@@ -31,50 +50,25 @@ namespace ToDoList.Services
                 }
             }
         }
-
-        private void WriteData(string newTasks)
-        {
-            using (var stream = new FileStream(_jsonTasksFileName, FileMode.Truncate))
-            {
-                using (var streamWriter = new StreamWriter(stream))
-                {
-                    streamWriter.WriteLine(newTasks);
-                }
-            }
-        }
         public void SaveTaskInDatabase(ToDoTask newTask)
         {
-            _stringTasks = ReadData();
-            if(_stringTasks != "")
-            {
-                _temporaryTasksList = JsonConvert.DeserializeObject<List<ToDoTask>>(_stringTasks);
-            }
-
-            if (newTask != null & _temporaryTasksList!=null)
-            {
-                _temporaryTasksList.Add(newTask);
-            }
-            var desCollTasks = JsonConvert.SerializeObject(_temporaryTasksList);
-            WriteData(desCollTasks);
+            Tasks.Add(newTask);
         }
 
         public void DeleteTaskFromDatabase(ToDoTask removableTask)
         {
-            _stringTasks = ReadData();
-            _temporaryTasksList = JsonConvert.DeserializeObject<List<ToDoTask>>(_stringTasks);
-            if (_temporaryTasksList != null)
-            {
-                var index = _temporaryTasksList.FindIndex((a) => removableTask.Id == a.Id);
-                _temporaryTasksList.RemoveAt(index);
-                string desCollTasks = JsonConvert.SerializeObject(_temporaryTasksList);
-                WriteData(desCollTasks);
-            }
+            Tasks.RemoveAt(Tasks.IndexOf(removableTask));
         }
 
         public void EditStateTask(ToDoTask editTask)
         {
-            DeleteTaskFromDatabase(editTask);
-            SaveTaskInDatabase(editTask);
+            foreach (var item in Tasks)
+            {
+                if (item.Id == editTask.Id)
+                {
+                    item.IsCompleted = !item.IsCompleted;
+                }
+            }
         }
     }
 }

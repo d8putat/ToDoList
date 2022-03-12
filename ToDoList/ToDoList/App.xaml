@@ -11,7 +11,10 @@
         <Color x:Key="LightGray">LightGray</Color>
         <Color x:Key="TimeColor">#DADADA</Color>
         <Color x:Key="BackgroundColor">#141419</Color>
-        <Color x:Key="BackgroundImageColor">#2DF7FA</Color>
+        <Color x:Key="EvenSelectorColor">#FFC0CB</Color>
+        <Color x:Key="OddSelectorColor">#A2D5C6</Color>
+        <Color x:Key="BackgroundDeleteButtonColor">#FFCC99</Color>
+
 
         <!--  LABELS  -->
         <Style x:Key="CompletedLabelStyle" TargetType="Label">

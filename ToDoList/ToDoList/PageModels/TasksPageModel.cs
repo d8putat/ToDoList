@@ -5,7 +5,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using ToDoList.Helpers;
 using ToDoList.Interfaces;
 using ToDoList.Models;
 using ToDoList.Pages;
@@ -34,8 +36,7 @@ namespace ToDoList.PageModels
         public ICommand PickTaskCommand => new Command<ToDoTask>(OnPickTask);
 
         public ICommand DeleteTaskCommand => new Command<ToDoTask>(OnDeleteTask);
-
-        public ICommand AddTaskCommand => new Command(GoToAddTask);
+        public ICommand AddTaskCommand => SingleExecutionCommand.FromFunc(GoToAddTask);
 
         #endregion Fields & Properties
 
@@ -104,7 +105,7 @@ namespace ToDoList.PageModels
             _taskService.EditStateTask(task);
         }
 
-        private async void GoToAddTask()
+        private async Task GoToAddTask()
         {
             await CoreMethods.PushPageModel<NewTaskPageModel>();
         }
@@ -165,7 +166,7 @@ namespace ToDoList.PageModels
             var countElements = IncompletedTasks.Count - index;
             var temporaryTasks = new ToDoTask[countElements];
             var temporaryIndex = index;
-            for (int i = 0; i < countElements; i++)
+            for (var i = 0; i < countElements; i++)
             {
                 temporaryTasks[i] = IncompletedTasks[temporaryIndex];
                 temporaryIndex++;

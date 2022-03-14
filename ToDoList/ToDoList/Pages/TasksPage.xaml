@@ -9,28 +9,27 @@
              xmlns:pageModels="clr-namespace:ToDoList.PageModels"
              xmlns:res="clr-namespace:ToDoList.LocalizationResources"
              xmlns:selectors="clr-namespace:ToDoList.Helpers;assembly=ToDoList"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="{extensions:ImageResource ToDoList.Images.background_image_main.png}">
     <ContentPage.Resources>
         <selectors:IndexToColorConverter x:Key="IndexToColorConverterBackground"
                                          EvenColor="{StaticResource EvenSelectorColor}"
                                          OddColor="{StaticResource OddSelectorColor}" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="20" BackgroundColor="{StaticResource BackgroundColor}">
+        <StackLayout Padding="25"  BackgroundColor="Transparent">
             <StackLayout>
                 <Label Style="{StaticResource TimeLabelStyle}" Text="{Binding Date, StringFormat='{0:MMMM} {0:dd}, {0:yyyy}'}" />
-                <BoxView HeightRequest="2"
-                         HorizontalOptions="Fill"
-                         Color="{StaticResource Gray}" />
+                
             </StackLayout>
             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <ScrollView>
-                    <StackLayout BackgroundColor="{StaticResource BackgroundColor}">
+                    <StackLayout BackgroundColor="Transparent">
                         <Label FontSize="20"
                                HorizontalOptions="CenterAndExpand"
                                IsVisible="{Binding IsFirstNotificationVisible}"
                                Text="{x:Static res:Resources.NoTasks}"
-                               TextColor="{StaticResource White}"
+                               TextColor="{StaticResource Gray}"
                                VerticalOptions="CenterAndExpand" />
                         <Label Margin="0,14,0,0"
                                IsVisible="{Binding IsPendingVisible}"
@@ -50,6 +49,7 @@
                                         </SwipeView.LeftItems>
                                         <StackLayout BackgroundColor="{Binding ., Converter={StaticResource IndexToColorConverterBackground}, ConverterParameter={x:Reference IncompletedTasks}}" Orientation="Horizontal">
                                             <inputKit:CheckBox x:Name="Completed"
+                                                               Padding="10"
                                                                CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
                                                                CommandParameter="{Binding .}"
                                                                IsChecked="{Binding IsCompleted}"
@@ -88,6 +88,7 @@
                                         </SwipeView.LeftItems>
                                         <StackLayout BackgroundColor="{StaticResource BackgroundCompletedTasksColor}" Orientation="Horizontal">
                                             <inputKit:CheckBox x:Name="Completed"
+                                                               Padding="10"
                                                                CheckChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type pageModels:TasksPageModel}}, Path=PickTaskCommand}"
                                                                CommandParameter="{Binding .}"
                                                                IsChecked="{Binding IsCompleted}"

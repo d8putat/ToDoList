@@ -3,8 +3,10 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pageModels="clr-namespace:ToDoList.PageModels"
+             xmlns:extensions="clr-namespace:ToDoList.MarkupExtensions;assembly=ToDoList"
              xmlns:res="clr-namespace:ToDoList.LocalizationResources"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="{extensions:ImageResource ToDoList.Images.background_image_main.png}">
     <ContentPage.Content>
         <StackLayout Padding="20">
             <AbsoluteLayout>

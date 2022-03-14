@@ -12,12 +12,16 @@
 
   <ItemGroup>
     <None Remove="Images\add_task.png" />
+    <None Remove="Images\background_image2.png" />
+    <None Remove="Images\background_image_main.png" />
     <None Remove="Images\remove_task.png" />
     <None Remove="tasks.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\add_task.png" />
+    <EmbeddedResource Include="Images\background_image2.png" />
+    <EmbeddedResource Include="Images\background_image_main.png" />
     <EmbeddedResource Include="Images\remove_task.png" />
   </ItemGroup>
 

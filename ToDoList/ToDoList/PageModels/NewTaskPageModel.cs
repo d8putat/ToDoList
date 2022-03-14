@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using ToDoList.Helpers;
 using ToDoList.LocalizationResources;
 using ToDoList.Models;
 using ToDoList.Pages;
@@ -15,11 +17,10 @@ namespace ToDoList.PageModels
         #region Fields & Properties
 
         public string Text { get; set; }
-        public ICommand CreateTaskCommand => new Command(NewTask);
-        public ICommand BackCommand => new Command(BackToTheMainPage);
+        public ICommand CreateTaskCommand => SingleExecutionCommand.FromFunc(NewTask);
 
         public ICommand DisplayTasksCommand => new Command(TemplateTasks);
-        public ICommand BackWithoutLabelCommand => new Command(BackToTheMainPageWithoutLabel);
+        public ICommand BackWithoutLabelCommand => SingleExecutionCommand.FromFunc(BackToTheMainPageWithoutLabel);
 
 
 
@@ -48,7 +49,7 @@ namespace ToDoList.PageModels
             }
         }
 
-        private async void NewTask()
+        private async Task NewTask()
         {
             if (Text != null)
             {
@@ -60,12 +61,7 @@ namespace ToDoList.PageModels
             }
         }
 
-        private async void BackToTheMainPage()
-        {
-            await CoreMethods.PopPageModel(Text);
-        }
-
-        private async void BackToTheMainPageWithoutLabel()
+        private async Task BackToTheMainPageWithoutLabel()
         {
             await CoreMethods.PopPageModel();
         }

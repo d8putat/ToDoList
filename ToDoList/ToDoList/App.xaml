@@ -22,24 +22,24 @@
         <Style x:Key="CompletedLabelStyle" TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="FontSize" Value="18" />
-            <Setter Property="TextColor" Value="{StaticResource White}" />
+            <Setter Property="TextColor" Value="{StaticResource Gray}" />
             <Setter Property="HorizontalTextAlignment" Value="Start" />
         </Style>
 
         <Style x:Key="NewTaskLabel" TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="FontSize" Value="25" />
-            <Setter Property="TextColor" Value="{StaticResource White}" />
+            <Setter Property="TextColor" Value="{StaticResource Gray}" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="TimeLabelStyle" TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="FontSize" Value="32" />
-            <Setter Property="TextColor" Value="{StaticResource TimeColor}" />
+            <Setter Property="TextColor" Value="{StaticResource BackgroundDeleteButtonColor}" />
             <Setter Property="WidthRequest" Value="227" />
             <Setter Property="HeightRequest" Value="39" />
-            <Setter Property="HorizontalTextAlignment" Value="Start" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
         </Style>
 
         <Style x:Key="CellIncompletedLabelStyle" TargetType="Label">
@@ -62,6 +62,7 @@
         <Style x:Key="CheckBoxStyle" TargetType="inputKit:CheckBox">
             <Setter Property="IconColor" Value="{StaticResource White}" />
             <Setter Property="Color" Value="{StaticResource White}" />
+            <Setter Property="Padding" Value="10" />
         </Style>
 
         <!--  EDITORS  -->
@@ -69,7 +70,6 @@
             <Setter Property="BackgroundColor" Value="{StaticResource Gray}" />
             <Setter Property="AutoSize" Value="TextChanges" />
         </Style>
-
 
     </Application.Resources>
 </Application>

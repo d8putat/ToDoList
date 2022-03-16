@@ -23,7 +23,7 @@ namespace ToDoList
 
         private void InitServices()
         {
-            FreshIOC.Container.Register<ITaskService, TaskService>().AsSingleton();
+            FreshIOC.Container.Register<ITaskService, TasksServiceDb>().AsSingleton();
         }
 
         private Page InitStartPage()

@@ -2,8 +2,8 @@
 <Application x:Class="ToDoList.App"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:inputKit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             xmlns:helpers="clr-namespace:ToDoList.Helpers;assembly=ToDoList">
+             xmlns:helpers="clr-namespace:ToDoList.Helpers;assembly=ToDoList"
+             xmlns:inputKit="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit">
     <Application.Resources>
         <!--  COLORS  -->
         <Color x:Key="White">#FFFFFF</Color>
